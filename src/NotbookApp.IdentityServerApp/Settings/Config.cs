@@ -50,7 +50,29 @@ namespace NotbookApp.IdentityServerApp.Settings
         public static List<Client> Clients =>
             new List<Client>
             {
-
+                new Client
+                {
+                    ClientName = "Image Gallery",
+                    ClientId = "imagegalleryclient",
+                    AllowedGrantTypes = GrantTypes.Code,
+                    RedirectUris = new List<string>
+                    {
+                        "https://localhost:5001/signin-oidc"
+                    },
+                    PostLogoutRedirectUris = new List<string>
+                    {
+                        "https://localhost:5001/signout-callback-oidc"
+                    },
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile
+                    },
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    }
+                }
             };
     }
 }

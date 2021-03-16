@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using NotebookApp.WebApp.Models;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace NotebookApp.WebApp.Controllers
 {
@@ -19,9 +23,20 @@ namespace NotebookApp.WebApp.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        [Authorize]
+        public async Task<IActionResult> Privacy()
         {
-            return View();
+            var accessToken = await HttpContext
+                .GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
+
+            var idToken = await HttpContext
+                .GetTokenAsync(OpenIdConnectParameterNames.IdToken);
+
+            return View("Privacy", new
+            {
+                accessToken,
+                idToken
+            });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
