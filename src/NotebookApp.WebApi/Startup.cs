@@ -17,12 +17,15 @@ namespace NotebookApp.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
             services.AddControllers();
 
             services.AddAuthentication("Bearer")
                 .AddIdentityServerAuthentication(options =>
                 {
-
+                    options.ApiName = "NotebookWebApi";
+                    options.ApiSecret = "apisecret";
+                    options.Authority = Configuration["IdentityServerUri"];
                 });
         }
 
