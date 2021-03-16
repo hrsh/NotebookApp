@@ -37,6 +37,8 @@ namespace NotebookApp.WebApp.Controllers
             var accessToken = await HttpContext
                 .GetTokenAsync(OpenIdConnectParameterNames.AccessToken);
 
+            _logger.LogWarning(accessToken);
+
             var idToken = await HttpContext
                 .GetTokenAsync(OpenIdConnectParameterNames.IdToken);
 
@@ -57,6 +59,13 @@ namespace NotebookApp.WebApp.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [Authorize]
+        public async Task Logout()
+        {
+            await HttpContext.SignOutAsync("Cookies");
+            await HttpContext.SignOutAsync("oidc");
         }
     }
 }

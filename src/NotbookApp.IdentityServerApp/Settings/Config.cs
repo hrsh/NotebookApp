@@ -15,24 +15,28 @@ namespace NotbookApp.IdentityServerApp.Settings
             {
                 new TestUser
                 {
-                    SubjectId = Guid.NewGuid().ToString("d"),
+                    SubjectId = "1081",
                     Username = "User 1",
                     Password = "pa$$w0rd123",
                     Claims = new List<Claim>
                     {
                         new Claim(JwtClaimTypes.GivenName, "Mazdak"),
-                        new Claim(JwtClaimTypes.FamilyName, "Shojaie")
+                        new Claim(JwtClaimTypes.FamilyName, "Shojaie"),
+                        new Claim(JwtClaimTypes.Role, "Admin"),
+                        new Claim("role", "Admin")
                     }
                 },
                 new TestUser
                 {
-                    SubjectId = Guid.NewGuid().ToString("d"),
+                    SubjectId = "2081",
                     Username = "User 2",
                     Password = "pa$$w0rd123",
                     Claims = new List<Claim>
                     {
                         new Claim(JwtClaimTypes.GivenName, "User"),
-                        new Claim(JwtClaimTypes.FamilyName, "Family")
+                        new Claim(JwtClaimTypes.FamilyName, "Family"),
+                        new Claim(JwtClaimTypes.Role, "Mom"),
+                        new Claim("role", "Admin")
                     }
                 }
             };
@@ -77,7 +81,10 @@ namespace NotbookApp.IdentityServerApp.Settings
         public static List<ApiScope> Scopes =>
             new List<ApiScope>
             {
-                new ApiScope("imagegalleryapi", "Image Gallery API")
+                new ApiScope(
+                    "imagegalleryapi",
+                    "Image Gallery API",
+                    new[] { "role" })
             };
     }
 }

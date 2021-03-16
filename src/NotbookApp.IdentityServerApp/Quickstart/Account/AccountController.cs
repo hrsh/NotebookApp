@@ -225,6 +225,7 @@ namespace IdentityServerHost.Quickstart.UI
             }
 
             return View("LoggedOut", vm);
+            //return Redirect(vm.PostLogoutRedirectUri);
         }
 
         [HttpGet]

@@ -1,8 +1,11 @@
+using IdentityModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace NotebookApp.WebApp
 {
@@ -11,6 +14,7 @@ namespace NotebookApp.WebApp
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
         }
 
         public IConfiguration Configuration { get; }
@@ -32,9 +36,16 @@ namespace NotebookApp.WebApp
                 options.ResponseType = "code";
                 options.Scope.Add("openid");
                 options.Scope.Add("profile");
+                options.Scope.Add("imagegalleryapi");
                 options.SaveTokens = true;
                 options.ClientSecret = "secret";
                 options.GetClaimsFromUserInfoEndpoint = true;
+
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                     NameClaimType = JwtClaimTypes.GivenName,
+                     RoleClaimType = JwtClaimTypes.Role
+                };
             });
 
             services.AddHttpClient();

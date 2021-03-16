@@ -21,7 +21,10 @@ namespace NotbookApp.IdentityServerApp
         {
             services.AddControllersWithViews();
             services.AddMvc();
-            services.AddIdentityServer()
+            services.AddIdentityServer(options =>
+            {
+                options.EmitStaticAudienceClaim = true;
+            })
                 .AddDeveloperSigningCredential()
                 .AddTestUsers(Config.Users)
                 .AddInMemoryIdentityResources(Config.IdentityResources)
