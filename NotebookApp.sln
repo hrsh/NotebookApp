@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NotebookApp.IdentityServer"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotebookApp.WebApi", "src\NotebookApp.WebApi\NotebookApp.WebApi.csproj", "{49E8B802-85BE-4506-99AC-CA28C7B315E3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotebookApp.WebApp", "src\NotebookApp.WebApp\NotebookApp.WebApp.csproj", "{99D23782-B89D-443E-9B07-158A79B4C1DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,12 +23,17 @@ Global
 		{49E8B802-85BE-4506-99AC-CA28C7B315E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49E8B802-85BE-4506-99AC-CA28C7B315E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49E8B802-85BE-4506-99AC-CA28C7B315E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99D23782-B89D-443E-9B07-158A79B4C1DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99D23782-B89D-443E-9B07-158A79B4C1DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99D23782-B89D-443E-9B07-158A79B4C1DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99D23782-B89D-443E-9B07-158A79B4C1DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{49E8B802-85BE-4506-99AC-CA28C7B315E3} = {450628FA-6548-4894-B2EA-B6EC57FF9D2C}
+		{99D23782-B89D-443E-9B07-158A79B4C1DE} = {06601045-0EA1-4616-99C2-66ADA98EBD0E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CA61D2BF-8D31-4AB1-9558-3D3E082A4117}
