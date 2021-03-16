@@ -23,7 +23,9 @@ namespace NotbookApp.IdentityServerApp.Settings
                         new Claim(JwtClaimTypes.GivenName, "Mazdak"),
                         new Claim(JwtClaimTypes.FamilyName, "Shojaie"),
                         new Claim(JwtClaimTypes.Role, "Admin"),
-                        new Claim("role", "Admin")
+                        new Claim("role", "Admin"),
+                        new Claim("subscriptionlevel", "awaited"),
+                        new Claim("country", "ir")
                     }
                 },
                 new TestUser
@@ -36,7 +38,9 @@ namespace NotbookApp.IdentityServerApp.Settings
                         new Claim(JwtClaimTypes.GivenName, "User"),
                         new Claim(JwtClaimTypes.FamilyName, "Family"),
                         new Claim(JwtClaimTypes.Role, "Mom"),
-                        new Claim("role", "Admin")
+                        new Claim("role", "Admin"),
+                        new Claim("subscriptionlevel", "staible"),
+                        new Claim("country", "de")
                     }
                 }
             };
@@ -45,7 +49,15 @@ namespace NotbookApp.IdentityServerApp.Settings
             new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
-                new IdentityResources.Profile()
+                new IdentityResources.Profile(),
+                //new IdentityResource(
+                //    "country",
+                //    "The country you're living in",
+                //    new List<string> { "country" }),
+                //new IdentityResource(
+                //    "subscriptionlevel",
+                //    "Your subscription level",
+                //    new List<string> { "subscriptionlevel" })
             };
 
         public static List<Client> Clients =>
@@ -84,7 +96,7 @@ namespace NotbookApp.IdentityServerApp.Settings
                 new ApiScope(
                     "imagegalleryapi",
                     "Image Gallery API",
-                    new[] { "role" })
+                    new[] { "role", "country", "subscriptionlevel" })
             };
     }
 }

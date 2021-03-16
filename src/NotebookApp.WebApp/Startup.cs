@@ -1,4 +1,5 @@
 using IdentityModel;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -37,9 +38,15 @@ namespace NotebookApp.WebApp
                 options.Scope.Add("openid");
                 options.Scope.Add("profile");
                 options.Scope.Add("imagegalleryapi");
+                //options.Scope.Add("subscriptionlevel");
+                //options.Scope.Add("country");
                 options.SaveTokens = true;
                 options.ClientSecret = "secret";
                 options.GetClaimsFromUserInfoEndpoint = true;
+
+                options.ClaimActions.MapUniqueJsonKey(claimType: "role", jsonKey: "role");
+                options.ClaimActions.MapUniqueJsonKey(claimType: "subscriptionlevel", jsonKey: "subscriptionlevel");
+                options.ClaimActions.MapUniqueJsonKey(claimType: "country", jsonKey: "country");
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
