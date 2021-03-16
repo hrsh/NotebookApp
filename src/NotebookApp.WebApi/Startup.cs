@@ -1,6 +1,8 @@
 using IdentityServer4.AccessTokenValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -21,10 +23,20 @@ namespace NotebookApp.WebApi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthorization(authorizationOptions =>
+            {
+                authorizationOptions.AddPolicy(
+                   name: "MustOwnImage",
+                   configurePolicy: policyBuilder =>
+                   {
+                       policyBuilder.RequireAuthenticatedUser();
+                       policyBuilder.AddRequirements(new MustOwnImageRequirement());
+                   });
+            });
             services.AddOptions();
             services.AddControllers();
-
-            //services.AddAuthorization();
+            services.AddHttpContextAccessor();
+            services.AddScoped<IAuthorizationHandler, MustOwnImageHandler>();
 
             services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -35,6 +47,9 @@ namespace NotebookApp.WebApi
                         ValidateAudience = false
                     };
                 });
+
+            services
+                .AddMvc();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -49,7 +64,6 @@ namespace NotebookApp.WebApi
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

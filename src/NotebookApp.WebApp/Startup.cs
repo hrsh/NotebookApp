@@ -38,8 +38,9 @@ namespace NotebookApp.WebApp
                 options.Scope.Add("openid");
                 options.Scope.Add("profile");
                 options.Scope.Add("imagegalleryapi");
-                //options.Scope.Add("subscriptionlevel");
-                //options.Scope.Add("country");
+                options.Scope.Add("country");
+                options.Scope.Add("role");
+                options.Scope.Add("subscriptionlevel");
                 options.SaveTokens = true;
                 options.ClientSecret = "secret";
                 options.GetClaimsFromUserInfoEndpoint = true;
@@ -50,8 +51,8 @@ namespace NotebookApp.WebApp
 
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                     NameClaimType = JwtClaimTypes.GivenName,
-                     RoleClaimType = JwtClaimTypes.Role
+                    NameClaimType = JwtClaimTypes.GivenName,
+                    RoleClaimType = JwtClaimTypes.Role
                 };
             });
 

@@ -2,7 +2,6 @@
 using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
-using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 
@@ -38,7 +37,6 @@ namespace NotbookApp.IdentityServerApp.Settings
                         new Claim(JwtClaimTypes.GivenName, "User"),
                         new Claim(JwtClaimTypes.FamilyName, "Family"),
                         new Claim(JwtClaimTypes.Role, "Mom"),
-                        new Claim("role", "Admin"),
                         new Claim("subscriptionlevel", "staible"),
                         new Claim("country", "de")
                     }
@@ -50,14 +48,9 @@ namespace NotbookApp.IdentityServerApp.Settings
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
-                //new IdentityResource(
-                //    "country",
-                //    "The country you're living in",
-                //    new List<string> { "country" }),
-                //new IdentityResource(
-                //    "subscriptionlevel",
-                //    "Your subscription level",
-                //    new List<string> { "subscriptionlevel" })
+                new IdentityResource("role","role",new []{"role"}),
+                new IdentityResource("country","country",new []{"country"}),
+                new IdentityResource("subscriptionlevel","subscriptionlevel",new []{"subscriptionlevel"}),
             };
 
         public static List<Client> Clients =>
@@ -80,7 +73,10 @@ namespace NotbookApp.IdentityServerApp.Settings
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "imagegalleryapi"
+                        "imagegalleryapi",
+                        "country",
+                        "subscriptionlevel",
+                        "role"
                     },
                     ClientSecrets =
                     {

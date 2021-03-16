@@ -45,8 +45,9 @@ namespace NotebookApp.WebApp.Controllers
             _client.DefaultRequestHeaders.Authorization =
                 new AuthenticationHeaderValue("Bearer", accessToken);
             var r = await _client.GetAsync("api/v1/notebook/auth");
+            if (r.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                return Unauthorized();
             var t = await r.Content.ReadAsStringAsync();
-
             //return View("Privacy", new
             //{
             //    accessToken,
