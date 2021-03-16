@@ -1,8 +1,10 @@
+using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 
 namespace NotebookApp.WebApi
 {
@@ -20,12 +22,16 @@ namespace NotebookApp.WebApi
             services.AddOptions();
             services.AddControllers();
 
-            services.AddAuthentication("Bearer")
-                .AddIdentityServerAuthentication(options =>
+            //services.AddAuthorization();
+
+            services.AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
                 {
-                    options.ApiName = "NotebookWebApi";
-                    options.ApiSecret = "apisecret";
-                    options.Authority = Configuration["IdentityServerUri"];
+                    options.Authority = "https://localhost:6001";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false
+                    };
                 });
         }
 

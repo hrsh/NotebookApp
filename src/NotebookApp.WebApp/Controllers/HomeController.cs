@@ -4,7 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using NotebookApp.WebApp.Models;
+using System;
 using System.Diagnostics;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace NotebookApp.WebApp.Controllers
@@ -12,10 +15,15 @@ namespace NotebookApp.WebApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly HttpClient _client;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(
+            ILogger<HomeController> logger,
+            IHttpClientFactory httpClientFactory)
         {
             _logger = logger;
+            _client = httpClientFactory.CreateClient();
+            _client.BaseAddress = new Uri("https://localhost:7001");
         }
 
         public IActionResult Index()
@@ -32,11 +40,17 @@ namespace NotebookApp.WebApp.Controllers
             var idToken = await HttpContext
                 .GetTokenAsync(OpenIdConnectParameterNames.IdToken);
 
-            return View("Privacy", new
-            {
-                accessToken,
-                idToken
-            });
+            _client.DefaultRequestHeaders.Authorization =
+                new AuthenticationHeaderValue("Bearer", accessToken);
+            var r = await _client.GetAsync("api/v1/notebook/auth");
+            var t = await r.Content.ReadAsStringAsync();
+
+            //return View("Privacy", new
+            //{
+            //    accessToken,
+            //    idToken
+            //});
+            return View(nameof(Privacy), t);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

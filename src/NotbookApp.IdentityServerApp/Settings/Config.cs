@@ -4,10 +4,7 @@ using IdentityServer4.Models;
 using IdentityServer4.Test;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NotbookApp.IdentityServerApp.Settings
 {
@@ -55,24 +52,32 @@ namespace NotbookApp.IdentityServerApp.Settings
                     ClientName = "Image Gallery",
                     ClientId = "imagegalleryclient",
                     AllowedGrantTypes = GrantTypes.Code,
-                    RedirectUris = new List<string>
+                    RedirectUris =
                     {
                         "https://localhost:5001/signin-oidc"
                     },
-                    PostLogoutRedirectUris = new List<string>
+                    PostLogoutRedirectUris =
                     {
                         "https://localhost:5001/signout-callback-oidc"
                     },
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "imagegalleryapi"
                     },
                     ClientSecrets =
                     {
                         new Secret("secret".Sha256())
-                    }
+                    },
+                    RequireConsent = true
                 }
+            };
+
+        public static List<ApiScope> Scopes =>
+            new List<ApiScope>
+            {
+                new ApiScope("imagegalleryapi", "Image Gallery API")
             };
     }
 }

@@ -25,6 +25,7 @@ namespace NotbookApp.IdentityServerApp
                 .AddDeveloperSigningCredential()
                 .AddTestUsers(Config.Users)
                 .AddInMemoryIdentityResources(Config.IdentityResources)
+                .AddInMemoryApiScopes(Config.Scopes)
                 .AddInMemoryClients(Config.Clients);
         }
 
@@ -38,6 +39,9 @@ namespace NotbookApp.IdentityServerApp
             app.UseIdentityServer();
             app.UseStaticFiles();
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
